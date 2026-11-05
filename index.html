@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>MetroPulse — MRT Blue Line Prototype</title>
+<title>MetroPulse — MRT Blue & Purple Lines Prototype</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&display=swap');
 :root{--bg:#080d16;--panel:#101827;--panel2:#151f31;--panel3:#0c1320;--text:#f3f7ff;--muted:#93a3bb;--line:#28364a;--blue:#16a8ff;--blue2:#0878d1;--pink:#ff68b5;--mint:#66e8d2;--yellow:#ffd477;--green:#60d9a1;--radius:22px}
@@ -210,6 +210,98 @@ body[data-theme="dark"] .theme-toggle{background:#132238;border-color:#344861;co
 body[data-theme="dark"] .theme-toggle span:first-child{color:#ffd477}
 @media(max-width:650px){.topbar{flex-wrap:wrap;align-items:center;gap:10px}.topbar-tools{width:100%;justify-content:flex-end;gap:6px}.theme-toggle{padding:7px 9px;font-size:10px;gap:5px}.theme-toggle span:first-child{font-size:14px}.live-pill{font-size:9px;padding:7px 8px}}
 
+
+/* Two-line route selector + visual wayfinding */
+.line-filters{display:flex;gap:8px;flex-wrap:wrap;margin:4px 0 12px}
+.line-filter{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line);border-radius:999px;padding:8px 13px;background:var(--panel3);color:var(--muted);font-size:12px;font-weight:600;transition:.15s}
+.line-filter.active{background:#edf7ff;color:#174e77;border-color:#99c9e8;box-shadow:0 2px 10px #1b78b31a}
+body[data-theme="dark"] .line-filter.active{background:#18334d;color:#d9f1ff;border-color:#397eaa}
+.filter-dot{width:9px;height:9px;border-radius:50%;display:inline-block}.blue-dot{background:#159fe8}.purple-dot{background:#8b62ce}.all-dot{background:linear-gradient(90deg,#159fe8 0 50%,#8b62ce 50%)}
+.map-viewport{height:410px}
+.station-option .station-code.purple-code{background:#f1ecfa;color:#6e48a8}
+.station-option .station-code.blue-code{background:#e8f5fd;color:#1876a7}
+body[data-theme="dark"] .station-option .station-code.purple-code{background:#302345;color:#d0b5ff}
+body[data-theme="dark"] .station-option .station-code.blue-code{background:#122a3d;color:#69cfff}
+.station-option{gap:8px}
+.station-option .line-mini{width:5px;height:25px;border-radius:8px;flex:0 0 5px}
+.line-mini.blue{background:#159fe8}.line-mini.purple{background:#8b62ce}
+.platform-guide{margin:18px 0 20px;padding:18px;border:1px solid #cfe1ed;border-radius:18px;background:linear-gradient(140deg,#f6fbff,#fff 70%);box-shadow:0 8px 26px #315a7a0b}
+.platform-guide-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px}
+.platform-guide-head h3{font-size:18px;margin:4px 0 0;color:#1e3b54}.guide-head-icon{font-size:20px;margin-right:5px}
+.verified-pill{font-size:10px;border-radius:999px;padding:6px 9px;background:#eaf8f1;color:#16825b;border:1px solid #c6ead8;white-space:nowrap}
+.guide-grid{display:grid;grid-template-columns:minmax(180px,.8fr) minmax(0,1.2fr);gap:12px}
+.guide-destination{border-radius:14px;padding:14px;background:#edf6fc;display:flex;gap:12px;align-items:center}
+.guide-arrow{width:52px;height:52px;border-radius:15px;background:#dceffc;color:#1678aa;display:grid;place-items:center;font-size:30px;flex:0 0 52px}
+.guide-destination small{color:#7590a5;font-size:10px;display:block}.guide-destination strong{font-size:15px;color:#1d4561;display:block;margin-top:2px}.guide-destination span{font-size:11px;color:#52738c;display:block;margin-top:3px}
+.guide-levels{border:1px solid #dce7ef;border-radius:14px;padding:12px;background:#fff}
+.guide-levels-title{display:flex;align-items:center;gap:7px;color:#547087;font-weight:700;font-size:11px;margin-bottom:8px}
+.level-stack{display:flex;flex-direction:column;gap:5px}
+.level-row{display:flex;align-items:center;gap:9px;padding:7px 9px;border-radius:9px;background:#f5f8fb;color:#8b9aaa;font-size:11px}
+.level-row b{width:28px;height:25px;border-radius:7px;background:#e5ecf2;display:grid;place-items:center;color:#667d90;font-size:10px}
+.level-row.active{background:#e8f7f1;color:#176e51;border:1px solid #bfe6d4;font-weight:700}.level-row.active b{background:#c8eddb;color:#126847}
+.side-platforms{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+.side-platform{min-height:64px;border:1px solid #e1e9ef;border-radius:12px;background:#f7f9fb;padding:9px;text-align:center;color:#8394a3}
+.side-platform .side-arrow{font-size:23px;line-height:1.1}.side-platform small{display:block;font-size:10px;margin-top:4px}
+.side-platform.active{background:#e9f8f1;border:2px solid #53b98c;color:#126b4e;font-weight:700;padding:8px}
+.guide-foot{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:10px;font-size:10px;color:#8294a4}
+.guide-foot a{color:#277da7;text-decoration:none;font-weight:700}.guide-foot a:hover{text-decoration:underline}
+.guide-steps{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.guide-step{display:flex;gap:7px;align-items:center;background:#f6f9fc;border:1px solid #e2ebf1;border-radius:10px;padding:8px 10px;color:#48647a;font-size:11px}.guide-step i{font-style:normal;font-size:16px}
+.guide-unknown{border:1px dashed #d7e1e9;border-radius:12px;padding:12px;color:#637b8e;background:#fbfcfd;font-size:11px;display:flex;align-items:center;gap:9px}
+.guide-unknown b{font-size:21px}
+body[data-theme="light"] .platform-guide{background:linear-gradient(140deg,#f6fbff,#fff 70%)}
+body[data-theme="dark"] .platform-guide{background:linear-gradient(140deg,#14253a,#101b2a);border-color:#34465c}
+body[data-theme="dark"] .platform-guide-head h3{color:#e2edf7}
+body[data-theme="dark"] .guide-destination{background:#1a3349}
+body[data-theme="dark"] .guide-arrow{background:#24445e;color:#85d5ff}
+body[data-theme="dark"] .guide-destination strong{color:#e1f2fc}
+body[data-theme="dark"] .guide-destination small,body[data-theme="dark"] .guide-destination span{color:#9db8ca}
+body[data-theme="dark"] .guide-levels{background:#142237;border-color:#34465b}
+body[data-theme="dark"] .guide-levels-title{color:#a9bfd0}
+body[data-theme="dark"] .level-row,body[data-theme="dark"] .side-platform,body[data-theme="dark"] .guide-step,body[data-theme="dark"] .guide-unknown{background:#1b2b40;border-color:#35485f;color:#afc1d0}
+body[data-theme="dark"] .level-row.active,body[data-theme="dark"] .side-platform.active{background:#173a36;border-color:#368c70;color:#a6f2d5}
+body[data-theme="dark"] .guide-foot{color:#92a7ba}
+body[data-theme="dark"] .guide-foot a{color:#7bcfff}
+@media(max-width:700px){.map-viewport{height:330px}.guide-grid{grid-template-columns:1fr}.platform-guide{padding:14px}.platform-guide-head h3{font-size:16px}.side-platform{min-height:58px}}
+
+
+/* Visual wayfinding: emphasize route direction over verbose instructions. */
+.direction-options{display:grid;gap:7px;margin-top:10px}
+.direction-options.two-platforms{grid-template-columns:1fr 1fr}
+.direction-option{display:flex;align-items:center;gap:9px;padding:10px;border:1px solid #e0e9f0;background:#f8fbfd;border-radius:12px;color:#667d90;min-width:0}
+.direction-option.active{border:2px solid #48b78b;background:#eaf8f1;color:#17694e;padding:9px;font-weight:700}
+.direction-option-icon{width:34px;height:34px;border-radius:10px;background:#eaf1f6;color:#6c8395;display:grid;place-items:center;font-weight:800;font-size:18px;flex:0 0 34px}
+.direction-option.active .direction-option-icon{background:#ccefe0;color:#13704f}
+.direction-option b{display:block;font-size:12px;line-height:1.25}
+.direction-option small{display:block;font-size:10px;margin-top:3px;color:#7b91a3;line-height:1.3}
+.direction-option em{font-size:9px;font-style:normal;margin-left:auto;background:#ccefe0;color:#126947;padding:4px 6px;border-radius:999px;white-space:nowrap}
+.transfer-guide{display:flex;align-items:center;gap:12px;margin-top:12px;padding:13px;border:1px solid #d9c9ef;background:#f7f2ff;border-radius:14px}
+.transfer-icon{width:42px;height:42px;border-radius:12px;background:#eadff8;color:#8055b4;display:grid;place-items:center;font-size:24px;flex:0 0 42px}
+.transfer-main{flex:1;min-width:0}.transfer-main small{display:block;color:#8b72a8;font-size:10px}.transfer-main strong{display:block;color:#57377f;font-size:14px;margin-top:2px}.transfer-main span{display:block;color:#826b9c;font-size:11px;margin-top:3px}
+.transfer-floor{width:54px;height:52px;border-radius:12px;background:#fff;border:1px solid #e4d7f3;display:grid;place-items:center;align-content:center;flex:0 0 54px}.transfer-floor b{font-size:20px;color:#7853a6}.transfer-floor small{font-size:9px;color:#8f7aa7}
+.guide-caution{margin-top:10px}
+body[data-theme="dark"] .direction-option{background:#1b2b40;border-color:#35485f;color:#afc1d0}
+body[data-theme="dark"] .direction-option.active{background:#173a36;border-color:#368c70;color:#a6f2d5}
+body[data-theme="dark"] .direction-option-icon{background:#26384e;color:#a9bfd0}
+body[data-theme="dark"] .direction-option.active .direction-option-icon{background:#245044;color:#a6f2d5}
+body[data-theme="dark"] .direction-option small{color:#9cb1c3}
+body[data-theme="dark"] .direction-option em{background:#245044;color:#a6f2d5}
+body[data-theme="dark"] .transfer-guide{background:#251d35;border-color:#4a3866}
+body[data-theme="dark"] .transfer-icon{background:#392953;color:#d5baff}
+body[data-theme="dark"] .transfer-main small,body[data-theme="dark"] .transfer-main span{color:#b7a2d0}
+body[data-theme="dark"] .transfer-main strong{color:#eadcff}
+body[data-theme="dark"] .transfer-floor{background:#302342;border-color:#4a3866}
+body[data-theme="dark"] .transfer-floor b{color:#e2caff}
+@media(max-width:700px){.direction-options.two-platforms{grid-template-columns:1fr}.transfer-guide{align-items:flex-start}.transfer-floor{margin-left:auto}}
+
+
+.line-chip.purple{background:#f2eafa;color:#7148a4}
+.line-chip.purple:before{background:#8b62ce}
+.line-chip.transfer{background:#eef4fb;color:#4d6680}
+.line-chip.transfer:before{background:linear-gradient(90deg,#159fe8 0 50%,#8b62ce 50% 100%)}
+body[data-theme="dark"] .line-chip.purple{background:#2d2140;color:#d4b9ff}
+body[data-theme="dark"] .line-chip.transfer{background:#1b2b40;color:#b8cbe0}
+
 </style>
 </head>
 <body data-theme="light">
@@ -218,29 +310,39 @@ body[data-theme="dark"] .theme-toggle span:first-child{color:#ffd477}
   <div class="brand"><div class="logo"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 17.5V6.8c0-1.1.9-2 2-2h12c1.1 0 2 .9 2 2v10.7c0 1.1-.9 2-2 2H6c-1.1 0-2-.9-2-2Z" stroke="white" stroke-width="1.8"/><path d="M7 15V9h10v6M8 19.5l-1.5 2M16 19.5l1.5 2M7 12h10" stroke="white" stroke-width="1.6" stroke-linecap="round"/><circle cx="8" cy="16.5" r=".8" fill="white"/><circle cx="16" cy="16.5" r=".8" fill="white"/></svg></div><div><div class="brand-name">MetroPulse</div><div class="brand-sub">Smart commute planner</div></div></div>
   <div class="topbar-tools">
     <button class="theme-toggle" id="themeToggle" type="button" aria-pressed="false" aria-label="เปลี่ยนเป็นโหมดสีเข้ม"><span id="themeIcon" aria-hidden="true">☾</span><span id="themeLabel">โหมดสีเข้ม</span></button>
-    <div class="live-pill"><span class="live-dot"></span> Prototype mode <span style="opacity:.55">/</span> Blue Line</div>
+    <div class="live-pill"><span class="live-dot"></span> Prototype mode <span style="opacity:.55">/</span> Blue + Purple</div>
   </div>
 </header>
-<section class="hero"><div><div class="eyebrow">MRT · BLUE LINE EXPERIENCE</div><h1>ไปให้ทันเวลา<br>โดยไม่ต้องเผื่อเกินจำเป็น</h1><p>วางแผนการเดินทางตามเวลาที่ต้องการถึง พร้อมดูเวลารถไฟฟ้าคันถัดไปและความหนาแน่นของตู้โดยสาร</p></div><div class="hero-tag">01 — 38 สถานี · MRT สายสีน้ำเงิน</div></section>
+<section class="hero"><div><div class="eyebrow">MRT · TWO-LINE EXPERIENCE</div><h1>ไปให้ทันเวลา<br>โดยไม่ต้องเผื่อเกินจำเป็น</h1><p>เลือกเส้นทาง ดูข้อมูลสถานี และรับคำแนะนำไปชานชาลาด้วยภาพและสัญลักษณ์</p></div><div class="hero-tag">02 สาย · 54 สถานี · MRT</div></section>
 <nav class="stepper" aria-label="ขั้นตอนการวางแผน"><div class="step active" data-step-chip="1"><span class="step-num">01</span><span class="step-label">เลือกต้นทาง</span></div><div class="step" data-step-chip="2"><span class="step-num">02</span><span class="step-label">เลือกปลายทาง</span></div><div class="step" data-step-chip="3"><span class="step-num">03</span><span class="step-label">กำหนดเวลา</span></div><div class="step" data-step-chip="4"><span class="step-num">04</span><span class="step-label">แผนการเดินทาง</span></div></nav>
 <div class="layout"><main class="main-card">
 <section id="step1" class="step-view">
-  <div class="section-head"><div><div class="eyebrow">STEP 01 / ORIGIN</div><h2>คุณจะเริ่มเดินทางจากสถานีไหน?</h2><p>เลือกสถานีต้นทางจากแผนผังหรือค้นหาจากรายชื่อด้านล่าง</p></div><span class="mini-badge">SELECT STATION A</span></div>
+  <div class="section-head"><div><div class="eyebrow">STEP 01 / ORIGIN</div><h2>คุณจะเริ่มเดินทางจากสถานีไหน?</h2><p>แตะสถานีบนแผนผัง หรือค้นหาชื่อสถานี</p></div><span class="mini-badge">SELECT STATION A</span></div>
   <div class="route-selects"><div class="station-box origin"><div class="cap">ต้นทาง · ORIGIN</div><div class="station-name" id="originTop">ยังไม่ได้เลือกสถานี</div></div><button class="swap" id="swapBtn" aria-label="สลับสถานี" title="สลับต้นทางและปลายทาง"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M7 4v15m0 0-4-4m4 4 4-4M17 20V5m0 0-4 4m4-4 4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div class="station-box destination"><div class="cap">ปลายทาง · DESTINATION</div><div class="station-name" id="destTop">ยังไม่ได้เลือกสถานี</div></div></div>
-  <div class="map-toolbar"><div><span class="map-title">แผนผัง MRT สายสีน้ำเงิน</span><span class="map-help">แตะจุดสถานีเพื่อเลือก</span></div><div class="map-actions"><button class="tool-btn" id="zoomOut" aria-label="ย่อแผนผัง">−</button><button class="tool-btn" id="zoomIn" aria-label="ขยายแผนผัง">+</button><button class="tool-btn" id="resetMap" aria-label="คืนค่าแผนผัง" title="คืนค่าแผนผัง">↺</button><button class="tool-btn" id="fitMap" aria-label="แสดงทั้งหมด" title="แสดงทั้งหมด">⌗</button></div></div>
-  <div class="map-viewport" id="mapViewport"><svg id="stationMap" viewBox="0 0 1260 740" role="img" aria-label="แผนผังสถานี MRT สายสีน้ำเงินแบบกดเลือกได้"><defs><filter id="glow"><feGaussianBlur stdDeviation="5" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><g id="mapContent"></g></svg></div>
+  <div class="line-filters" role="group" aria-label="เลือกสายรถไฟฟ้า">
+    <button class="line-filter active" data-line-filter="all" type="button"><span class="filter-dot all-dot"></span>ทั้งหมด</button>
+    <button class="line-filter" data-line-filter="blue" type="button"><span class="filter-dot blue-dot"></span>สีน้ำเงิน</button>
+    <button class="line-filter" data-line-filter="purple" type="button"><span class="filter-dot purple-dot"></span>สีม่วง</button>
+  </div>
+  <div class="map-toolbar"><div><span class="map-title">แผนผัง MRT 2 สาย</span><span class="map-help">แตะสถานี · เลือกสายเพื่อขยายแผนผัง</span></div><div class="map-actions"><button class="tool-btn" id="zoomOut" aria-label="ย่อแผนผัง">−</button><button class="tool-btn" id="zoomIn" aria-label="ขยายแผนผัง">+</button><button class="tool-btn" id="resetMap" aria-label="คืนค่าแผนผัง" title="คืนค่าแผนผัง">↺</button><button class="tool-btn" id="fitMap" aria-label="แสดงทั้งหมด" title="แสดงทั้งหมด">⌗</button></div></div>
+  <div class="map-viewport" id="mapViewport"><svg id="stationMap" viewBox="0 0 1360 760" role="img" aria-label="แผนผังสถานี MRT สายสีน้ำเงินและสีม่วงแบบกดเลือกได้"><defs><filter id="glow"><feGaussianBlur stdDeviation="5" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><g id="mapContent"></g></svg></div>
   <div class="map-legend"><span class="legend-item"><i class="legend-dot pink"></i>ต้นทางที่เลือก</span><span class="legend-item"><i class="legend-dot mint"></i>ปลายทางที่เลือก</span><span class="legend-item"><i class="legend-dot"></i>สถานีอื่น</span><span class="legend-item" style="margin-left:auto">ลากเพื่อเลื่อน · ใช้ + / − เพื่อซูม</span></div>
-  <div class="search-row"><div class="search-wrap"><svg viewBox="0 0 24 24" fill="none"><circle cx="10.8" cy="10.8" r="6.8" stroke="currentColor" stroke-width="1.7"/><path d="m16 16 4.5 4.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg><input id="stationSearch" placeholder="ค้นหาชื่อสถานี เช่น สุขุมวิท, BL22" autocomplete="off" /></div><span class="result-count" id="stationCount">38 สถานี</span></div>
+  <div class="search-row"><div class="search-wrap"><svg viewBox="0 0 24 24" fill="none"><circle cx="10.8" cy="10.8" r="6.8" stroke="currentColor" stroke-width="1.7"/><path d="m16 16 4.5 4.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg><input id="stationSearch" placeholder="ค้นหาสถานี / รหัส เช่น บางอ้อ, PP16" autocomplete="off" /></div><span class="result-count" id="stationCount">54 สถานี</span></div>
   <div class="station-list" id="stationList"></div>
   <div class="bottom-actions"><span class="muted-note">เลือกต้นทางแล้วกดดำเนินการต่อ<br>สามารถเปลี่ยนสถานีได้ทุกเมื่อ</span><button class="btn-primary" id="toStep2" disabled>เลือกปลายทาง <span>→</span></button></div>
 </section>
 <section id="step2" class="step-view hidden">
-  <div class="section-head"><div><div class="eyebrow">STEP 02 / DESTINATION</div><h2>ต้องการไปถึงสถานีไหน?</h2><p>เลือกสถานีปลายทางในสายสีน้ำเงิน ข้อมูลเวลารถไฟฟ้าและความหนาแน่นรายตู้จะแสดงที่สถานีต้นทาง</p></div><span class="mini-badge">SELECT STATION B</span></div>
+  <div class="section-head"><div><div class="eyebrow">STEP 02 / DESTINATION</div><h2>ต้องการไปถึงสถานีไหน?</h2><p>เลือกได้ทั้งสายสีน้ำเงินและสีม่วง</p></div><span class="mini-badge">SELECT STATION B</span></div>
   <div class="route-selects"><div class="station-box origin"><div class="cap">ต้นทาง · ORIGIN</div><div class="station-name" id="originTop2">ยังไม่ได้เลือกสถานี</div></div><button class="swap" id="swapBtn2" aria-label="สลับสถานี"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M7 4v15m0 0-4-4m4 4 4-4M17 20V5m0 0-4 4m4-4 4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div class="station-box destination"><div class="cap">ปลายทาง · DESTINATION</div><div class="station-name" id="destTop2">ยังไม่ได้เลือกสถานี</div></div></div>
-  <div class="map-toolbar"><div><span class="map-title">แตะสถานีปลายทาง</span><span class="map-help">ต้นทาง: สีชมพู · ปลายทาง: สีเขียวอมฟ้า</span></div><div class="map-actions"><button class="tool-btn" id="zoomOut2">−</button><button class="tool-btn" id="zoomIn2">+</button><button class="tool-btn" id="resetMap2">↺</button></div></div>
-  <div class="map-viewport" id="mapViewport2"><svg id="stationMap2" viewBox="0 0 1260 740" role="img" aria-label="แผนผังสถานี MRT สายสีน้ำเงิน"><g id="mapContent2"></g></svg></div>
+  <div class="line-filters" role="group" aria-label="เลือกสายรถไฟฟ้า">
+    <button class="line-filter active" data-line-filter="all" type="button"><span class="filter-dot all-dot"></span>ทั้งหมด</button>
+    <button class="line-filter" data-line-filter="blue" type="button"><span class="filter-dot blue-dot"></span>สีน้ำเงิน</button>
+    <button class="line-filter" data-line-filter="purple" type="button"><span class="filter-dot purple-dot"></span>สีม่วง</button>
+  </div>
+  <div class="map-toolbar"><div><span class="map-title">เลือกปลายทาง</span><span class="map-help">ต้นทาง: สีชมพู · ปลายทาง: สีเขียวอมฟ้า</span></div><div class="map-actions"><button class="tool-btn" id="zoomOut2">−</button><button class="tool-btn" id="zoomIn2">+</button><button class="tool-btn" id="resetMap2">↺</button></div></div>
+  <div class="map-viewport" id="mapViewport2"><svg id="stationMap2" viewBox="0 0 1360 760" role="img" aria-label="แผนผังสถานี MRT สายสีน้ำเงินและสีม่วง"><g id="mapContent2"></g></svg></div>
   <div class="map-legend"><span class="legend-item"><i class="legend-dot pink"></i>ต้นทาง</span><span class="legend-item"><i class="legend-dot mint"></i>แตะเพื่อเลือกปลายทาง</span><span class="legend-item" style="margin-left:auto">แผนผังจำลองสำหรับต้นแบบ</span></div>
-  <div class="search-row"><div class="search-wrap"><svg viewBox="0 0 24 24" fill="none"><circle cx="10.8" cy="10.8" r="6.8" stroke="currentColor" stroke-width="1.7"/><path d="m16 16 4.5 4.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg><input id="stationSearch2" placeholder="ค้นหาสถานีปลายทาง" autocomplete="off" /></div><span class="result-count" id="stationCount2">38 สถานี</span></div>
+  <div class="search-row"><div class="search-wrap"><svg viewBox="0 0 24 24" fill="none"><circle cx="10.8" cy="10.8" r="6.8" stroke="currentColor" stroke-width="1.7"/><path d="m16 16 4.5 4.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg><input id="stationSearch2" placeholder="ค้นหาสถานีปลายทาง" autocomplete="off" /></div><span class="result-count" id="stationCount2">54 สถานี</span></div>
   <div class="station-list" id="stationList2"></div>
   <div class="bottom-actions"><button class="btn-secondary" id="back1">← ย้อนกลับ</button><button class="btn-primary" id="toStep3" disabled>กำหนดเวลาเดินทาง <span>→</span></button></div>
 </section>
@@ -258,7 +360,11 @@ body[data-theme="dark"] .theme-toggle span:first-child{color:#ffd477}
   <div class="route-selects"><div class="station-box origin"><div class="cap">ต้นทาง · ORIGIN</div><div class="station-name" id="originTop4">—</div></div><button class="swap" id="swapBtn4" aria-label="สลับสถานี"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M7 4v15m0 0-4-4m4 4 4-4M17 20V5m0 0-4 4m4-4 4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div class="station-box destination"><div class="cap">ปลายทาง · DESTINATION</div><div class="station-name" id="destTop4">—</div></div></div>
   <div class="result-hero"><div><div class="caption">แนะนำให้มาถึงสถานีต้นทางเวลา</div><div class="big-time" id="recommendedTime">07:45 น.</div><div class="sub" id="recommendedSub">เพื่อไปถึงปลายทางตามเวลาที่ระบุ</div></div><div class="result-clock">◷</div></div>
   <div class="metrics"><div class="metric"><div class="m-label">เวลารอรถไฟฟ้า</div><div class="m-val" id="waitMetric">4 <small style="font-size:12px">นาที</small></div><div class="m-foot">หลังถึงชานชาลา</div></div><div class="metric"><div class="m-label">เวลาเดินทาง</div><div class="m-val" id="travelMetric">24 <small style="font-size:12px">นาที</small></div><div class="m-foot">ประมาณการจำลอง</div></div><div class="metric"><div class="m-label">จำนวนสถานี</div><div class="m-val" id="hopsMetric">10 <small style="font-size:12px">สถานี</small></div><div class="m-foot">เส้นทางที่สั้นกว่า</div></div></div>
-  <div class="map-toolbar"><span class="map-title">เส้นทางโดยสรุป</span><span class="line-chip">MRT BLUE LINE</span></div><div class="route-list" id="routeList"></div>
+  <div class="map-toolbar"><span class="map-title">เส้นทางโดยสรุป</span><span class="line-chip" id="routeLineChip">MRT LINE</span></div><div class="route-list" id="routeList"></div>
+  <section class="platform-guide" id="platformGuide" aria-live="polite">
+    <div class="platform-guide-head"><div><div class="eyebrow">WAYFINDING</div><h3><span class="guide-head-icon">🧭</span> ไปชานชาลาไหน?</h3></div><span class="verified-pill" id="guideVerified">คำแนะนำเส้นทาง</span></div>
+    <div id="platformGuideContent"></div>
+  </section>
   <section class="origin-live-panel" aria-live="polite" aria-label="ข้อมูลสถานีต้นทาง ณ ขณะนี้">
     <div class="origin-live-head"><div><div class="eyebrow">ORIGIN STATION · LIVE SNAPSHOT</div><div class="origin-live-title" id="originLiveName">ข้อมูลสถานีต้นทาง</div><div class="origin-live-sub" id="originLiveSub">—</div></div><span class="origin-live-badge"><i class="live-dot"></i> อัปเดตอัตโนมัติ</span></div>
     <div class="origin-live-grid">
@@ -279,8 +385,8 @@ body[data-theme="dark"] .theme-toggle span:first-child{color:#ffd477}
   <div class="bottom-actions"><button class="btn-secondary" id="editPlan">← แก้ไขเวลา / สถานี</button><button class="btn-primary" id="newPlan">เริ่มแผนใหม่ <span>↻</span></button></div>
 </section>
 </main>
-<aside class="side-card"><div class="side-kicker">YOUR JOURNEY</div><h3>วางแผนง่ายใน 4 ขั้นตอน</h3><p>ออกแบบมาเพื่อช่วยลดการเผื่อเวลาเกินจำเป็นในช่วงเวลาเร่งด่วน</p><div class="side-divider"></div><div class="info-row"><span>สายรถไฟฟ้า</span><b>MRT สายสีน้ำเงิน</b></div><div class="info-row"><span>จำนวนสถานี</span><b>38 สถานี</b></div><div class="info-row"><span>ต้นทาง</span><b id="sideOrigin">ยังไม่ได้เลือก</b></div><div class="info-row"><span>ปลายทาง</span><b id="sideDest">ยังไม่ได้เลือก</b></div><div class="side-divider"></div><div class="side-steps"><div class="side-step"><div class="side-step-icon">⌖</div><div><strong>เลือกสถานี</strong><small>กดบนแผนผัง หรือค้นหาชื่อสถานี</small></div></div><div class="side-step"><div class="side-step-icon">◷</div><div><strong>กำหนดเวลาถึง</strong><small>ระบุเวลาที่ต้องการไปถึงปลายทาง</small></div></div><div class="side-step"><div class="side-step-icon">↗</div><div><strong>รับคำแนะนำ</strong><small>ดูเวลาแนะนำ เวลารอ และความหนาแน่น</small></div></div></div><div class="notice">ต้นแบบ UI · ค่าการเดินทางและความหนาแน่นยังเป็นข้อมูลจำลอง</div></aside></div>
-<div class="source-line">Station names and codes referenced from BEM’s MRT Blue Line station list · Prototype schematic only</div>
+<aside class="side-card"><div class="side-kicker">YOUR JOURNEY</div><h3>วางแผนง่ายใน 4 ขั้นตอน</h3><p>ออกแบบมาเพื่อช่วยลดการเผื่อเวลาเกินจำเป็นในช่วงเวลาเร่งด่วน</p><div class="side-divider"></div><div class="info-row"><span>สายรถไฟฟ้า</span><b>MRT 2 สาย</b></div><div class="info-row"><span>สถานี</span><b>54</b></div><div class="info-row"><span>ต้นทาง</span><b id="sideOrigin">ยังไม่ได้เลือก</b></div><div class="info-row"><span>ปลายทาง</span><b id="sideDest">ยังไม่ได้เลือก</b></div><div class="side-divider"></div><div class="side-steps"><div class="side-step"><div class="side-step-icon">⌖</div><div><strong>เลือกสถานี</strong><small>กดบนแผนผัง หรือค้นหาชื่อสถานี</small></div></div><div class="side-step"><div class="side-step-icon">◷</div><div><strong>กำหนดเวลาถึง</strong><small>ระบุเวลาที่ต้องการไปถึงปลายทาง</small></div></div><div class="side-step"><div class="side-step-icon">↗</div><div><strong>รับคำแนะนำ</strong><small>ดูเวลาแนะนำ เวลารอ และความหนาแน่น</small></div></div></div><div class="notice">ต้นแบบ UI · ค่าการเดินทางและความหนาแน่นยังเป็นข้อมูลจำลอง</div></aside></div>
+<div class="source-line">Station names and codes referenced from BEM and MRTA · Schematic map, station-side guidance shown only where verified</div>
 </div><div class="modal-backdrop hidden" id="stationModal" role="dialog" aria-modal="true" aria-labelledby="modalStationName" aria-hidden="true">
   <div class="station-modal" role="document">
     <div class="modal-topline"></div>
@@ -381,50 +487,92 @@ const stations=[
 {n:37,code:'BL37',name:'บางแค',en:'Bang Khae',x:610,y:675,dx:0,dy:24,anchor:'middle'},
 {n:38,code:'BL38',name:'หลักสอง',en:'Lak Song',x:670,y:685,dx:0,dy:24,anchor:'middle'}
 ];
-let origin=null,destination=null,currentStep=1;let maps=[];let viewScale=1,viewX=0,viewY=0;let toastTimer;let pendingStation=null;
+
+const purpleStations=[
+{n:39,code:'PP01',name:'คลองบางไผ่',en:'Khlong Bang Phai',line:'purple',x:860,y:675,dx:-4,dy:27,anchor:'middle'},
+{n:40,code:'PP02',name:'ตลาดบางใหญ่',en:'Talad Bang Yai',line:'purple',x:920,y:700,dx:0,dy:27,anchor:'middle'},
+{n:41,code:'PP03',name:'สามแยกบางใหญ่',en:'Sam Yaek Bang Yai',line:'purple',x:990,y:705,dx:0,dy:-17,anchor:'middle'},
+{n:42,code:'PP04',name:'บางพลู',en:'Bang Phlu',line:'purple',x:1060,y:690,dx:0,dy:-17,anchor:'middle'},
+{n:43,code:'PP05',name:'บางรักใหญ่',en:'Bang Rak Yai',line:'purple',x:1120,y:660,dx:8,dy:-17,anchor:'middle'},
+{n:44,code:'PP06',name:'บางรักน้อย-ท่าอิฐ',en:'Bang Rak Noi-Tha It',line:'purple',x:1160,y:615,dx:0,dy:-17,anchor:'middle'},
+{n:45,code:'PP07',name:'ไทรม้า',en:'Sai Ma',line:'purple',x:1180,y:560,dx:0,dy:-17,anchor:'middle'},
+{n:46,code:'PP08',name:'สะพานพระนั่งเกล้า',en:'Phra Nang Klao Bridge',line:'purple',x:1175,y:500,dx:0,dy:-17,anchor:'middle'},
+{n:47,code:'PP09',name:'แยกนนทบุรี 1',en:'Yaek Nonthaburi 1',line:'purple',x:1140,y:440,dx:0,dy:-17,anchor:'middle'},
+{n:48,code:'PP10',name:'บางกระสอ',en:'Bang Krasor',line:'purple',x:1090,y:380,dx:0,dy:-17,anchor:'middle'},
+{n:49,code:'PP11',name:'ศูนย์ราชการนนทบุรี',en:'Nonthaburi Civic Center',line:'purple',x:1030,y:325,dx:0,dy:-17,anchor:'middle'},
+{n:50,code:'PP12',name:'กระทรวงสาธารณสุข',en:'Ministry of Public Health',line:'purple',x:970,y:275,dx:0,dy:-17,anchor:'middle'},
+{n:51,code:'PP13',name:'แยกติวานนท์',en:'Yaek Tiwanon',line:'purple',x:900,y:230,dx:0,dy:-17,anchor:'middle'},
+{n:52,code:'PP14',name:'วงศ์สว่าง',en:'Wong Sawang',line:'purple',x:835,y:190,dx:0,dy:-17,anchor:'middle'},
+{n:53,code:'PP15',name:'บางซ่อน',en:'Bang Son',line:'purple',x:780,y:170,dx:0,dy:-17,anchor:'middle'},
+{n:54,code:'PP16',name:'เตาปูน',en:'Tao Poon',line:'purple',x:740,y:120,dx:0,dy:-19,anchor:'middle'}
+];
+stations.forEach(s=>s.line='blue');
+stations.push(...purpleStations);
+
+let origin=null,destination=null,currentStep=1;let mapLineFilter="all";let maps=[];let viewScale=1,viewX=0,viewY=0;let toastTimer;let pendingStation=null;
 const $=id=>document.getElementById(id);const fmtCode=n=>'BL'+String(n).padStart(2,'0');
 function notify(msg){$('toast').textContent=msg;$('toast').classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('toast').classList.remove('show'),2200)}
 function getStation(n){return stations.find(s=>s.n===Number(n))}
-function selectionColor(s){if(origin?.n===s.n)return '#ff68b5';if(destination?.n===s.n)return '#66e8d2';return '#0b1725'}
-function renderMap(targetId,step){const g=$(targetId);if(!g)return;let parts=[];
- const ringStations=stations.filter(s=>s.n<=32);const ring=[...ringStations,ringStations[0]].map(s=>`${s.x},${s.y}`).join(' ');
- parts.push(`<polyline points="${ring}" fill="none" stroke="#173d59" stroke-width="15" stroke-linecap="round" stroke-linejoin="round" opacity=".8" pointer-events="none"/>`);
- parts.push(`<polyline points="${ring}" fill="none" stroke="#11a8ff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" pointer-events="none"/>`);
- const branch=[getStation(1),...stations.filter(s=>s.n>=33)].map(s=>`${s.x},${s.y}`).join(' ');
- parts.push(`<polyline points="${branch}" fill="none" stroke="#11a8ff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" pointer-events="none"/>`);
- parts.push(`<text x="60" y="45" fill="#6d88a5" font-size="13" letter-spacing="3" font-weight="600">MRT BLUE LINE</text>`);
- parts.push(`<text x="60" y="68" fill="#3e5d78" font-size="10">SCHEMATIC MAP · TAP A STATION</text>`);
- // Main loop nodes and labels
- for(const s of stations){
-  const chosen=selectionColor(s);const isOrigin=origin?.n===s.n,isDest=destination?.n===s.n;
-  let lab=s.name;if(lab.length>15)lab=lab.slice(0,14)+'…';
-  const dy=s.dy;const anchor=s.anchor;const labelY=s.y+dy;
-  const codeY=dy>0?labelY+12:labelY-5;
-  const labelX=s.x+s.dx;
-  parts.push(`<g class="station-node ${isOrigin?'is-origin':isDest?'is-destination':''}" data-station="${s.n}" role="button" tabindex="0" aria-label="เลือกสถานี ${s.name}" style="cursor:pointer">`);
-  parts.push(`<circle cx="${s.x}" cy="${s.y}" r="20" fill="transparent" pointer-events="all"/>`);
-  if(isOrigin||isDest)parts.push(`<circle cx="${s.x}" cy="${s.y}" r="16" fill="${chosen}" opacity=".18" filter="url(#glow)"/>`);
-  parts.push(`<circle cx="${s.x}" cy="${s.y}" r="${isOrigin||isDest?10:7}" fill="${chosen}" stroke="${isOrigin||isDest?chosen:'#73d7ff'}" stroke-width="${isOrigin||isDest?3:2}"/>`);
-  if(isOrigin||isDest)parts.push(`<circle cx="${s.x}" cy="${s.y}" r="3" fill="#07111d"/>`);
-  parts.push(`<text x="${labelX}" y="${labelY}" text-anchor="${anchor}" fill="${isOrigin?'#ffabd6':isDest?'#9bffea':'#c2d0e0'}" font-size="12" font-weight="600" style="pointer-events:none">${lab}</text>`);
-  parts.push(`<text x="${labelX}" y="${codeY}" text-anchor="${anchor}" fill="#617c97" font-size="9" style="pointer-events:none">${s.code}</text>`);
+function selectionColor(s){if(origin?.n===s.n)return '#ff68b5';if(destination?.n===s.n)return '#66e8d2';return s.line==='purple'?'#8b62ce':'#159fe8'}
+function renderMap(targetId,step){const g=$(targetId);if(!g)return;let parts=[];const showBlue=mapLineFilter==='all'||mapLineFilter==='blue',showPurple=mapLineFilter==='all'||mapLineFilter==='purple';const labelFont=mapLineFilter==='all'?12:18,codeFont=mapLineFilter==='all'?9:13;
+ if(showBlue){
+  parts.push(mapLineFilter==='blue'?'<g>':'<g transform="translate(20 42) scale(.62 .78)">');
+  const blue=stations.filter(s=>s.line==='blue');const ringStations=blue.filter(s=>s.n<=32);const ring=[...ringStations,ringStations[0]].map(s=>`${s.x},${s.y}`).join(' ');
+  parts.push(`<polyline points="${ring}" fill="none" stroke="#0d5c8b" stroke-width="15" stroke-linecap="round" stroke-linejoin="round" opacity=".35" pointer-events="none"/>`);
+  parts.push(`<polyline points="${ring}" fill="none" stroke="#159fe8" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" pointer-events="none"/>`);
+  const branch=[getStation(1),...blue.filter(s=>s.n>=33)].map(s=>`${s.x},${s.y}`).join(' ');
+  parts.push(`<polyline points="${branch}" fill="none" stroke="#159fe8" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" pointer-events="none"/>`);
+  parts.push('<text x="55" y="35" fill="#1685bd" font-size="17" letter-spacing="3" font-weight="700" style="pointer-events:none">BLUE LINE</text>');
+  for(const s of blue){const chosen=selectionColor(s),isO=origin?.n===s.n,isD=destination?.n===s.n;let lab=s.name;if(lab.length>15)lab=lab.slice(0,14)+'…';const labelY=s.y+s.dy,codeY=s.dy>0?labelY+12:labelY-5,labelX=s.x+s.dx;
+   parts.push(`<g class="station-node ${isO?'is-origin':isD?'is-destination':''}" data-station="${s.n}" role="button" tabindex="0" aria-label="เลือกสถานี ${s.name}" style="cursor:pointer">`);
+   parts.push(`<circle cx="${s.x}" cy="${s.y}" r="20" fill="transparent" pointer-events="all"/>`);if(isO||isD)parts.push(`<circle cx="${s.x}" cy="${s.y}" r="16" fill="${chosen}" opacity=".18" filter="url(#glow)"/>`);
+   parts.push(`<circle cx="${s.x}" cy="${s.y}" r="${isO||isD?10:7}" fill="${chosen}" stroke="${isO||isD?chosen:'#b7e8ff'}" stroke-width="${isO||isD?3:2}"/>`);
+   parts.push(`<text x="${labelX}" y="${labelY}" text-anchor="${s.anchor}" fill="${isO?'#ffabd6':isD?'#9bffea':'#5e9fc1'}" font-size="${labelFont}" font-weight="700" style="pointer-events:none">${lab}</text><text x="${labelX}" y="${codeY}" text-anchor="${s.anchor}" fill="#7ba3bd" font-size="${codeFont}" style="pointer-events:none">${s.code}</text></g>`);
+  }
   parts.push('</g>');
+ }
+ if(showPurple){
+  parts.push(mapLineFilter==='purple'?'<g transform="translate(-840 25) scale(1.5 .95)">':'<g>');
+  const purple=stations.filter(s=>s.line==='purple').sort((a,b)=>b.n-a.n);const pts=purple.map(s=>`${s.x},${s.y}`).join(' ');
+  parts.push(`<polyline points="${pts}" fill="none" stroke="#8b62ce" stroke-width="15" stroke-linecap="round" stroke-linejoin="round" opacity=".16" pointer-events="none"/>`);
+  parts.push(`<polyline points="${pts}" fill="none" stroke="#8b62ce" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" pointer-events="none"/>`);
+  parts.push('<text x="850" y="70" fill="#8b62ce" font-size="17" letter-spacing="3" font-weight="700" style="pointer-events:none">PURPLE LINE</text>');
+  for(const s of purple){const chosen=selectionColor(s),isO=origin?.n===s.n,isD=destination?.n===s.n;let lab=s.name;if(lab.length>15)lab=lab.slice(0,14)+'…';const labelY=s.y+s.dy,codeY=s.dy>0?labelY+12:labelY-5,labelX=s.x+s.dx;
+   parts.push(`<g class="station-node ${isO?'is-origin':isD?'is-destination':''}" data-station="${s.n}" role="button" tabindex="0" aria-label="เลือกสถานี ${s.name}" style="cursor:pointer">`);
+   parts.push(`<circle cx="${s.x}" cy="${s.y}" r="20" fill="transparent" pointer-events="all"/>`);if(isO||isD)parts.push(`<circle cx="${s.x}" cy="${s.y}" r="16" fill="${chosen}" opacity=".18" filter="url(#glow)"/>`);
+   parts.push(`<circle cx="${s.x}" cy="${s.y}" r="${isO||isD?10:7}" fill="${chosen}" stroke="${isO||isD?chosen:'#d7c7f5'}" stroke-width="${isO||isD?3:2}"/>`);
+   parts.push(`<text x="${labelX}" y="${labelY}" text-anchor="${s.anchor}" fill="${isO?'#ffabd6':isD?'#9bffea':'#9a79c9'}" font-size="${labelFont}" font-weight="700" style="pointer-events:none">${lab}</text><text x="${labelX}" y="${codeY}" text-anchor="${s.anchor}" fill="#a18abb" font-size="${codeFont}" style="pointer-events:none">${s.code}</text></g>`);
+  }
+  parts.push('</g>');
+ }
+ if(mapLineFilter==='all'){
+   const bx=20+350*.55,by=50+100*.72,px=740,py=120;
+   parts.push(`<path d="M ${bx+12} ${by} C 430 90, 530 90, ${px-14} ${py}" stroke="#8799aa" stroke-width="2.5" stroke-dasharray="6 7" fill="none" opacity=".85" pointer-events="none"/>`);
+   parts.push(`<rect x="425" y="80" width="128" height="25" rx="12" fill="#f2f6fa" stroke="#d5e0e9"/><text x="489" y="97" text-anchor="middle" fill="#526d83" font-size="11" font-weight="700" style="pointer-events:none">⇄ เตาปูน · เปลี่ยนสาย</text>`);
  }
  g.innerHTML=parts.join('');g.querySelectorAll('.station-node').forEach(el=>{el.addEventListener('click',()=>selectStation(Number(el.dataset.station),step));el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();selectStation(Number(el.dataset.station),step)}})});
 }
-function buildStationList(listId,searchId,countId,step){const list=$(listId),q=$(searchId).value.trim().toLowerCase();const prev=list.scrollTop;const shown=stations.filter(s=>`${s.name} ${s.en} ${s.code}`.toLowerCase().includes(q));$(countId).textContent=`${shown.length} สถานี`;list.innerHTML=shown.map(s=>{const isO=origin?.n===s.n,isD=destination?.n===s.n;const selected=step===1?isO:isD;let cls=selected?(step===1?'selected-origin':'selected-dest'):'';return `<button class="station-option ${cls}" data-station="${s.n}" type="button"><span class="station-code">${s.code}</span><span class="s-name">${s.name}</span>${selected?'<span class="check">✓</span>':''}</button>`}).join('');list.querySelectorAll('button').forEach(el=>el.addEventListener('click',()=>selectStation(Number(el.dataset.station),step)));list.scrollTop=prev}
-function selectStation(n,step){const s=getStation(n);if(!s)return;if(step===2&&origin?.n===n){notify('สถานีปลายทางต้องต่างจากต้นทาง');return;}pendingStation={station:s,role:step===1?'origin':'destination'};openStationModal(n,step===1?'origin':'destination')}
+function buildStationList(listId,searchId,countId,step){const list=$(listId),q=$(searchId).value.trim().toLowerCase();const prev=list.scrollTop;const shown=stations.filter(s=>(mapLineFilter==='all'||s.line===mapLineFilter)&&`${s.name} ${s.en} ${s.code}`.toLowerCase().includes(q));$(countId).textContent=`${shown.length} สถานี`;list.innerHTML=shown.map(s=>{const isO=origin?.n===s.n,isD=destination?.n===s.n;const selected=step===1?isO:isD;let cls=selected?(step===1?'selected-origin':'selected-dest'):'';return `<button class="station-option ${cls}" data-station="${s.n}" type="button"><i class="line-mini ${s.line}"></i><span class="station-code ${s.line==='purple'?'purple-code':'blue-code'}">${s.code}</span><span class="s-name">${s.name}</span>${selected?'<span class="check">✓</span>':''}</button>`}).join('');list.querySelectorAll('button').forEach(el=>el.addEventListener('click',()=>selectStation(Number(el.dataset.station),step)));list.scrollTop=prev}
+function setMapLineFilter(line){mapLineFilter=line;document.querySelectorAll('[data-line-filter]').forEach(b=>b.classList.toggle('active',b.dataset.lineFilter===line));renderAll()}
+document.querySelectorAll('[data-line-filter]').forEach(b=>b.addEventListener('click',()=>setMapLineFilter(b.dataset.lineFilter)));
+function samePhysicalStation(a,b){return !!a&&!!b&&(a.n===b.n||((a.n===10||a.n===54)&&(b.n===10||b.n===54)));}
+function selectStation(n,step){const s=getStation(n);if(!s)return;if(step===2&&samePhysicalStation(origin,s)){notify('สถานีต้นทางและปลายทางต้องไม่ใช่จุดเดียวกัน');return;}pendingStation={station:s,role:step===1?'origin':'destination'};openStationModal(n,step===1?'origin':'destination')}
 function renderAll(){renderMap('mapContent',1);renderMap('mapContent2',2);buildStationList('stationList','stationSearch','stationCount',1);buildStationList('stationList2','stationSearch2','stationCount2',2);updateLabels();$('toStep2').disabled=!origin;$('toStep3').disabled=!destination||!origin;$('sideOrigin').textContent=origin?origin.name:'ยังไม่ได้เลือก';$('sideDest').textContent=destination?destination.name:'ยังไม่ได้เลือก';}
 function updateLabels(){for(const i of ['','2','3','4']){$('originTop'+i).textContent=origin?origin.name:'ยังไม่ได้เลือกสถานี';$('destTop'+i).textContent=destination?destination.name:'ยังไม่ได้เลือกสถานี'}}
 function showStep(n){currentStep=n;document.querySelectorAll('.step-view').forEach(el=>el.classList.add('hidden'));$('step'+n).classList.remove('hidden');document.querySelectorAll('[data-step-chip]').forEach(el=>{const k=Number(el.dataset.stepChip);el.classList.toggle('active',k===n);el.classList.toggle('done',k<n);el.querySelector('.step-num').textContent=k<n?'✓':String(k).padStart(2,'0')});window.scrollTo({top:0,behavior:'smooth'});updateLabels()}
 function swapStations(){if(origin&&destination){[origin,destination]=[destination,origin];renderAll();notify('สลับต้นทางและปลายทางแล้ว')}else notify('เลือกทั้งต้นทางและปลายทางก่อนจึงจะสลับได้')}
-function attachMapControls(mapId,contentId,viewportId,alt=''){const svg=$(mapId),g=$(contentId),vp=$(viewportId);let scale=1,tx=0,ty=0,drag=null;const apply=()=>g.setAttribute('transform',`translate(${tx} ${ty}) translate(630 370) scale(${scale}) translate(-630 -370)`);const zoom=delta=>{scale=Math.max(.65,Math.min(2.25,scale+delta));apply()};const reset=()=>{scale=1;tx=0;ty=0;apply()};const fit=()=>{scale=.86;tx=0;ty=0;apply()};$(alt?'zoomIn2':'zoomIn').onclick=()=>zoom(.15);$(alt?'zoomOut2':'zoomOut').onclick=()=>zoom(-.15);$(alt?'resetMap2':'resetMap').onclick=reset;if(!alt)$('fitMap').onclick=fit;svg.addEventListener('pointerdown',e=>{if(e.target.closest('.station-node'))return;drag={x:e.clientX,y:e.clientY,tx,ty};svg.classList.add('dragging');svg.setPointerCapture(e.pointerId)});svg.addEventListener('pointermove',e=>{if(!drag)return;const rect=vp.getBoundingClientRect();tx=drag.tx+(e.clientX-drag.x)*1260/rect.width/scale;ty=drag.ty+(e.clientY-drag.y)*740/rect.height/scale;apply()});const end=()=>{drag=null;svg.classList.remove('dragging')};svg.addEventListener('pointerup',end);svg.addEventListener('pointercancel',end);vp.addEventListener('wheel',e=>{if(!e.ctrlKey&&!e.metaKey)return;e.preventDefault();zoom(e.deltaY<0?.08:-.08)},{passive:false})}
-function graphPath(start,end){const adj=new Map(stations.map(s=>[s.n,[]]));for(let i=1;i<=32;i++){const next=i===32?1:i+1;adj.get(i).push(next);adj.get(next).push(i)}adj.get(1).push(33);adj.get(33).push(1);for(let i=33;i<38;i++){adj.get(i).push(i+1);adj.get(i+1).push(i)}const q=[start],prev=new Map([[start,null]]);while(q.length){const u=q.shift();if(u===end)break;for(const v of adj.get(u)){if(!prev.has(v)){prev.set(v,u);q.push(v)}}}const path=[];let cur=end;while(cur!==null&&cur!==undefined){path.push(cur);cur=prev.get(cur)}return path.reverse()}
+function attachMapControls(mapId,contentId,viewportId,alt=''){const svg=$(mapId),g=$(contentId),vp=$(viewportId);let scale=1,tx=0,ty=0,drag=null;const apply=()=>g.setAttribute('transform',`translate(${tx} ${ty}) translate(680 380) scale(${scale}) translate(-680 -380)`);const zoom=delta=>{scale=Math.max(.65,Math.min(2.25,scale+delta));apply()};const reset=()=>{scale=1;tx=0;ty=0;apply()};const fit=()=>{scale=.92;tx=0;ty=0;apply()};$(alt?'zoomIn2':'zoomIn').onclick=()=>zoom(.15);$(alt?'zoomOut2':'zoomOut').onclick=()=>zoom(-.15);$(alt?'resetMap2':'resetMap').onclick=reset;if(!alt)$('fitMap').onclick=fit;svg.addEventListener('pointerdown',e=>{if(e.target.closest('.station-node'))return;drag={x:e.clientX,y:e.clientY,tx,ty};svg.classList.add('dragging');svg.setPointerCapture(e.pointerId)});svg.addEventListener('pointermove',e=>{if(!drag)return;const rect=vp.getBoundingClientRect();tx=drag.tx+(e.clientX-drag.x)*1360/rect.width/scale;ty=drag.ty+(e.clientY-drag.y)*760/rect.height/scale;apply()});const end=()=>{drag=null;svg.classList.remove('dragging')};svg.addEventListener('pointerup',end);svg.addEventListener('pointercancel',end);vp.addEventListener('wheel',e=>{if(!e.ctrlKey&&!e.metaKey)return;e.preventDefault();zoom(e.deltaY<0?.08:-.08)},{passive:false})}
+function graphPath(start,end){const adj=new Map(stations.map(s=>[s.n,[]]));const add=(a,b)=>{adj.get(a).push(b);adj.get(b).push(a)};
+ for(let i=1;i<=32;i++){const next=i===32?1:i+1;add(i,next)}add(1,33);for(let i=33;i<38;i++)add(i,i+1);
+ for(let i=39;i<54;i++)add(i,i+1);add(10,54); // Tao Poon interchange: Blue BL10 ↔ Purple PP16
+ const q=[start],prev=new Map([[start,null]]);while(q.length){const u=q.shift();if(u===end)break;for(const v of adj.get(u)){if(!prev.has(v)){prev.set(v,u);q.push(v)}}}
+ if(!prev.has(end))return [];const path=[];let cur=end;while(cur!==null&&cur!==undefined){path.push(cur);cur=prev.get(cur)}return path.reverse()}
+function isTaoPoonPair(a,b){return (a===10&&b===54)||(a===54&&b===10)}
 function minsToClock(total){total=((total%1440)+1440)%1440;return `${String(Math.floor(total/60)).padStart(2,'0')}:${String(total%60).padStart(2,'0')}`}
 function clockToMins(t){const [h,m]=t.split(':').map(Number);return h*60+m}
 function calculate(){
  if(!origin||!destination||origin.n===destination.n){notify('กรุณาเลือกสถานีต้นทางและปลายทางให้ครบ');return;}
- const route=graphPath(origin.n,destination.n),hops=Math.max(0,route.length-1);
+ const route=graphPath(origin.n,destination.n);if(!route.length){notify('ยังไม่พบเส้นทางเชื่อมต่อ');return;}const transfers=route.slice(1).filter((n,i)=>isTaoPoonPair(route[i],n)).length;const hops=Math.max(0,route.length-1-transfers);
  const walk=Number($('walkTime').value),buffer=Number($('safetyBuffer').value),arrival=clockToMins($('arrivalTime').value);
  // One arrival countdown for the next train; crowding values belong to individual carriages on that same train.
  originSnapshot=demoSnapshot(origin.n);const live=originSnapshot;const preferA=live.loadA<=live.loadB;
@@ -438,9 +586,91 @@ function calculate(){
  $('carAResult').textContent=`ตู้ที่ ${preferredCar} (นับจากหัวขบวน)`;$('carBResult').textContent=`ตู้ที่ ${alternativeCar} (นับจากหัวขบวน)`;
  $('carASub').textContent='✦ แนะนำ · ความหนาแน่นคาดการณ์ต่ำกว่า';$('carBSub').textContent='อีกทางเลือก · ความหนาแน่นคาดการณ์สูงกว่า';
  $('crowdA').textContent=`${preferredLoad}%`;$('crowdB').textContent=`${alternativeLoad}%`;$('barA').style.width=preferredLoad+'%';$('barB').style.width=alternativeLoad+'%';
- $('routeList').innerHTML=route.map((n,i)=>`${i?'<span class="route-arrow">→</span>':''}<span class="route-node">${getStation(n).name}</span>`).join('');
+ let routeHtml='';route.forEach((n,i)=>{if(i){const prev=route[i-1];routeHtml+=isTaoPoonPair(prev,n)?'<span class="transfer-pill">⇄ เปลี่ยนสายที่เตาปูน</span>':'<span class="route-arrow">→</span>';}const st=getStation(n);routeHtml+=`<span class="route-node ${st.line}"><i></i>${st.name}<small>${st.code}</small></span>`;});$('routeList').innerHTML=routeHtml;const usedLines=[...new Set(route.map(n=>getStation(n).line))];const routeChip=$('routeLineChip');routeChip.textContent=usedLines.length>1?'BLUE ⇄ PURPLE':usedLines[0]==='purple'?'MRT PURPLE LINE':'MRT BLUE LINE';routeChip.className='line-chip '+(usedLines.length>1?'transfer':'')+(usedLines[0]==='purple'&&usedLines.length===1?' purple':'');renderPlatformGuide(route);
  showStep(4);startOriginSummary(true);
 }
+// Station wayfinding: use MRTA-published platform direction data where available.
+const purpleStationInfo={
+ 'PP01':{level:3,url:'https://www.mrta.co.th/th/mrt-station/11077'},
+ 'PP02':{level:3,url:'https://www.mrta.co.th/th/mrt-station/11078'},
+ 'PP05':{level:3,url:'https://www.mrta.co.th/th/mrt-station/11089'},
+ 'PP11':{level:3,url:'https://www.mrta.co.th/th/mrt-station/11095'},
+ 'PP15':{level:3,url:'https://www.mrta.co.th/th/mrt-station/11100'},
+ 'PP16':{level:4,url:'https://www.mrta.co.th/th/mrt-station/11101'}
+};
+function bluePlatformAtTao(nextBlue){if(nextBlue?.n===11)return 1;if(nextBlue?.n===9)return 2;return null}
+function levelStackHtml(level,lineLabel){
+ if(!level)return `<div class="guide-levels"><div class="guide-levels-title"><span>🏢</span> ชั้นสถานี</div><div class="guide-unknown"><b>⬆</b><span>ขึ้นไปยังชานชาลา แล้วเลือกป้ายปลายทางที่ไฮไลต์ไว้</span></div></div>`;
+ const rows=level===4?[4,3,2,1]:[3,2,1];
+ return `<div class="guide-levels"><div class="guide-levels-title"><span>🏢</span> ชั้นสถานี</div><div class="level-stack">${rows.map((floor,i)=>`<div class="level-row ${floor===level?'active':''}"><b>${floor}F</b><span>${floor===level?`ชานชาลา · ${lineLabel}`:floor===2?'ชั้นออกบัตร':floor===1?'ทางเข้าสถานี': 'ชานชาลาอีกสาย'}</span></div>`).join('')}</div></div>`;
+}
+function purpleDirectionCards(towardTao){
+ return `<div class="direction-options"><div class="direction-option ${towardTao?'active':''}"><span class="direction-option-icon">${towardTao?'➜':'○'}</span><span><b>ไปทางเตาปูน</b><small>ทิศทางเข้าสู่สถานีเชื่อมต่อ</small></span>${towardTao?'<em>ขึ้นทางนี้</em>':''}</div><div class="direction-option ${!towardTao?'active':''}"><span class="direction-option-icon">${!towardTao?'➜':'○'}</span><span><b>ไปทางคลองบางไผ่</b><small>ทิศทางไปปลายสายฝั่งนนทบุรี</small></span>${!towardTao?'<em>ขึ้นทางนี้</em>':''}</div></div>`;
+}
+function blueTaoPlatformCards(platformNo){
+ return `<div class="direction-options two-platforms"><div class="direction-option ${platformNo===1?'active':''}"><span class="direction-option-icon">1</span><span><b>ชานชาลา 1</b><small>ผ่านบางซื่อ · วนผ่านท่าพระ</small></span>${platformNo===1?'<em>ขึ้นทางนี้</em>':''}</div><div class="direction-option ${platformNo===2?'active':''}"><span class="direction-option-icon">2</span><span><b>ชานชาลา 2</b><small>ผ่านบางโพ · เปลี่ยนที่ท่าพระ</small></span>${platformNo===2?'<em>ขึ้นทางนี้</em>':''}</div></div>`;
+}
+function transferGuideHtml(toLine, nextBlue, destinationName){
+ if(toLine==='purple'){
+  return `<div class="transfer-guide"><div class="transfer-icon">⇄</div><div class="transfer-main"><small>เปลี่ยนสายที่เตาปูน</small><strong>ขึ้นสายสีม่วง · ชั้น 4</strong><span>มุ่งหน้า ${destinationName||'คลองบางไผ่'}</span></div><div class="transfer-floor"><b>4F</b><small>ชานชาลา</small></div></div>`;
+ }
+ const p=bluePlatformAtTao(nextBlue);
+ return `<div class="transfer-guide"><div class="transfer-icon">⇄</div><div class="transfer-main"><small>เปลี่ยนสายที่เตาปูน</small><strong>ขึ้นสายสีน้ำเงิน · ชั้น 3</strong><span>${p?`ชานชาลา ${p} · ผ่าน${nextBlue.name}`:'เลือกชานชาลาตามป้ายปลายทาง'}</span></div><div class="transfer-floor"><b>3F</b><small>${p?`ชานชาลา ${p}`:'ชานชาลา'}</small></div></div>`;
+}
+function renderPlatformGuide(route){
+ const host=$('platformGuideContent');if(!host||!route?.length)return;
+ const s=getStation(route[0]),next=route[1]?getStation(route[1]):null;
+ const destinationStation=getStation(route[route.length-1]);
+ const changeIndex=route.findIndex((n,i)=>i>0&&getStation(route[i-1]).line!==getStation(n).line);
+ const hasTransfer=changeIndex>0;
+ let line=s.line,terminal=destinationStation?.name||'ปลายทาง',directionText='',level=null,source='',note='',optionHtml='',transferHtml='';
+ let guideStation=s;
+ if(changeIndex===1){
+   // User starts at Tao Poon and immediately changes to the other line.
+   const target=getStation(route[1]);line=target.line;guideStation=target;
+   if(line==='purple'){
+     const after=getStation(route[2]);const towardTao=!!after&&after.n>target.n;
+     terminal=towardTao?'เตาปูน':'คลองบางไผ่';directionText=`มุ่งหน้า ${terminal}`;level=4;source=purpleStationInfo.PP16.url;note='สายสีม่วง · ชั้น 4';optionHtml=purpleDirectionCards(towardTao);
+   }else{
+     const after=getStation(route[2]);const p=bluePlatformAtTao(after);
+     terminal=after?.name||destinationStation?.name||'ปลายทาง';directionText=p?`ชานชาลา ${p} · มุ่งหน้า ${terminal}`:`มุ่งหน้า ${terminal}`;level=3;source='https://www.mrta.co.th/th/mrt-station/11101';note='สายสีน้ำเงิน · ชั้น 3';optionHtml=blueTaoPlatformCards(p);
+   }
+ }else if(hasTransfer){
+   // First leg ends at Tao Poon; add an unmistakable visual transfer instruction.
+   if(line==='purple'){
+     const towardTao=!!next&&next.n>s.n;terminal='เตาปูน';directionText='มุ่งหน้าเตาปูน';
+     const info=purpleStationInfo[s.code];level=info?.level||null;source=info?.url||'https://www.mrta.co.th/th/mrt-chalong-ratchadham?category_id=512';
+     note=level?`สายสีม่วง · ชั้น ${level}`:'สายสีม่วง · ไปชานชาลา';optionHtml=purpleDirectionCards(towardTao);
+   }else{
+     terminal='เตาปูน';directionText=`มุ่งหน้าเตาปูน`;
+     source='https://www.mrta.co.th/th/mrt-chaloem-ratchamongkhon';note='สายสีน้ำเงิน · ตามป้ายไปเตาปูน';
+     optionHtml=`<div class="direction-options"><div class="direction-option active"><span class="direction-option-icon">➜</span><span><b>ไปทางเตาปูน</b><small>ขึ้นสายสีน้ำเงินตามป้ายปลายทางเตาปูน</small></span><em>ขึ้นทางนี้</em></div></div>`;
+   }
+   const transferFrom=getStation(route[changeIndex-1]),transferTo=getStation(route[changeIndex]);
+   if(transferFrom.line==='blue'&&transferTo.line==='purple'){
+     const after=getStation(route[changeIndex+1]);const towardTao=!!after&&after.n>transferTo.n;const nextTerminal=towardTao?'เตาปูน':'คลองบางไผ่';transferHtml=transferGuideHtml('purple',null,nextTerminal);
+   }else if(transferFrom.line==='purple'&&transferTo.line==='blue'){
+     const after=getStation(route[changeIndex+1]);transferHtml=transferGuideHtml('blue',after,destinationStation?.name);
+   }
+ }else if(line==='purple'){
+   const towardTao=!!next&&next.n>s.n;terminal=towardTao?'เตาปูน':'คลองบางไผ่';directionText=`มุ่งหน้า${terminal}`;
+   const info=purpleStationInfo[s.code];level=info?.level||null;source=info?.url||'https://www.mrta.co.th/th/mrt-chalong-ratchadham?category_id=512';
+   note=level?`สายสีม่วง · ชั้น ${level}`:'สายสีม่วง · ไปชานชาลา';optionHtml=purpleDirectionCards(towardTao);
+ }else if(s.n===10){
+   const p=bluePlatformAtTao(next);terminal=destinationStation?.name||next?.name||'ปลายทาง';directionText=p?`ชานชาลา ${p} · มุ่งหน้า ${terminal}`:`มุ่งหน้า ${terminal}`;level=3;source='https://www.mrta.co.th/th/mrt-station/11101';note='สายสีน้ำเงิน · ชั้น 3';optionHtml=blueTaoPlatformCards(p);
+ }else{
+   terminal=destinationStation?.name||next?.name||'ปลายทาง';directionText=`มุ่งหน้า ${terminal}`;source='https://www.mrta.co.th/th/mrt-chaloem-ratchamongkhon';note='สายสีน้ำเงิน · ดูป้ายปลายทาง';
+   optionHtml=`<div class="direction-options"><div class="direction-option active"><span class="direction-option-icon">➜</span><span><b>มุ่งหน้า ${terminal}</b><small>เลือกชานชาลาที่มีป้ายปลายทางตรงกัน</small></span><em>ขึ้นทางนี้</em></div></div>`;
+ }
+ const lineLabel=line==='purple'?'สีม่วง':'สีน้ำเงิน';
+ const levelHtml=levelStackHtml(level,lineLabel);
+ const routeNames=`${s.name} → ${destinationStation?.name||terminal}`;
+ const sourceHtml=source?`<a href="${source}" target="_blank" rel="noopener">ดูผังสถานี รฟม. ↗</a>`:'';
+ const caution=(s.line==='purple'||s.n===10||s.n===54)?'ซ้าย/ขวาอาจต่างตามทางเข้า · เทียบป้ายปลายทาง':'เลือกป้ายชื่อปลายทางให้ตรง';
+ host.innerHTML=`<div class="guide-grid"><div><div class="guide-destination"><div class="guide-arrow">➜</div><div><small>เส้นทางที่ต้องขึ้น</small><strong>${directionText}</strong><span>${routeNames}</span></div></div><div class="guide-steps"><div class="guide-step"><i>🚶</i> ไปตามป้ายสาย${lineLabel}</div><div class="guide-step"><i>⬆️</i> ${note}</div></div>${optionHtml}</div><div>${levelHtml}<div class="guide-unknown guide-caution"><b>ⓘ</b><span>${caution}</span></div></div></div>${transferHtml}<div class="guide-foot"><span>แสดงทิศทางก่อน · ไม่เดาตำแหน่งซ้าย/ขวาที่อาจเปลี่ยนตามทางเข้า</span>${sourceHtml}</div>`;
+ const verified=level?'ชั้นสถานีอ้างอิง รฟม.':hasTransfer?'มีจุดเปลี่ยนสาย':'ทิศทางจากเส้นทาง';$('guideVerified').textContent=verified;
+}
+function sameStationRouteTerminal(line,terminal){return terminal|| (line==='purple'?'คลองบางไผ่':'สถานีถัดไป')}
 // Station insight popup: simulated live station telemetry. ETA is for the arriving train;
 // load percentages are for individual carriages on that same train.
 let activeModalStation=null, stationDemo=null, stationModalTimer=null;
@@ -460,8 +690,8 @@ function paintStationModal(){if(!activeModalStation||!stationDemo)return;const s
  $('modalStationName').textContent=s.name;$('modalStationSub').textContent=`${s.code} · ${s.en}`;
  $('modalUpdated').textContent=`อัปเดตตัวอย่างเมื่อ ${new Date(d.createdAt).toLocaleTimeString('th-TH',{hour:'2-digit',minute:'2-digit',second:'2-digit'})}`;
  $('modalNextEta1').innerHTML=`${formatEta(d.etaNext)} <small>นาที:วินาที</small>`;$('modalNextTime1').textContent=`คาดว่ารถไฟฟ้าจะถึงชานชาลาประมาณ ${predictedClock(d.etaNext)} น.`;
- const direction=(s.n%2===0)?'หลักสอง':'ท่าพระ';
- $('modalDirection1').textContent=`↗ มุ่งหน้าฝั่ง${direction}`;
+ const direction=s.line==='purple'?'เตาปูน / คลองบางไผ่':'ดูทิศทางสถานีถัดไป';
+ $('modalDirection1').textContent=`↗ ${direction}`;
  $('modalCrowdPct').textContent=`${d.crowd}%`;$('modalCrowdBar').style.width=`${d.crowd}%`;$('modalDensity').textContent=`${d.density} คน/ตร.ม.`;$('modalCrowdLevel').textContent=d.level;$('modalCrowdLevel').className='crowd-level-pill'+(d.level==='ปานกลาง'?' medium':d.level==='หนาแน่น'?' high':'');$('modalTrend').textContent=d.trend;
  $('modalCarLabelA').textContent=`ตู้ที่ ${d.carA} (นับจากหัวขบวน)`;$('modalCarLabelB').textContent=`ตู้ที่ ${d.carB} (นับจากหัวขบวน)`;
  $('modalCarPositionA').textContent='ตำแหน่งตู้โดยสารบนรถไฟฟ้าคันถัดไป';$('modalCarPositionB').textContent='ตำแหน่งตู้โดยสารบนรถไฟฟ้าคันถัดไป';
@@ -474,7 +704,7 @@ function paintStationModal(){if(!activeModalStation||!stationDemo)return;const s
 let activeModalMode='origin';let originSnapshot=null;let originSummaryTimer=null;
 function paintOriginSummary(){if(!origin||!originSnapshot)return;const s=origin,d=originSnapshot;const aRecommended=d.loadA<=d.loadB;
  $('originLiveName').textContent=`${s.name} · สถานีต้นทาง`;$('originLiveSub').textContent=`${s.code} · ${s.en} · อัปเดตตัวอย่าง ${new Date(d.createdAt).toLocaleTimeString('th-TH',{hour:'2-digit',minute:'2-digit',second:'2-digit'})}`;
- $('originSummaryEta').textContent=formatEta(d.etaNext);$('originSummaryClock').textContent=`รถไฟฟ้าคาดว่าจะถึงชานชาลาประมาณ ${predictedClock(d.etaNext)} น.`;$('originSummaryDirection').textContent=`↗ มุ่งหน้าฝั่ง${s.n%2===0?'หลักสอง':'ท่าพระ'}`;
+ $('originSummaryEta').textContent=formatEta(d.etaNext);$('originSummaryClock').textContent=`รถไฟฟ้าคาดว่าจะถึงชานชาลาประมาณ ${predictedClock(d.etaNext)} น.`;$('originSummaryDirection').textContent=`↗ ${s.line==='purple'?'สายสีม่วง · เตาปูน / คลองบางไผ่':'สายสีน้ำเงิน · ดูป้ายสถานีถัดไป'}`;
  $('originSummaryCrowdPct').textContent=`${d.crowd}%`;$('originSummaryCrowdBar').style.width=`${d.crowd}%`;$('originSummaryLevel').textContent=d.level;$('originSummaryDensity').textContent=`ความหนาแน่นประมาณ ${d.density} คน/ตร.ม.`;$('originSummaryTrend').textContent=d.trend;
  $('originSummaryCarLabelA').textContent=`ตู้ที่ ${d.carA} (นับจากหัวขบวน)`;$('originSummaryCarLabelB').textContent=`ตู้ที่ ${d.carB} (นับจากหัวขบวน)`;
  $('originSummaryLoadA').textContent=`${d.loadA}%`;$('originSummaryLoadB').textContent=`${d.loadB}%`;$('originSummaryLoadBarA').style.width=`${d.loadA}%`;$('originSummaryLoadBarB').style.width=`${d.loadB}%`;
@@ -489,16 +719,16 @@ function openStationModal(n,mode='origin'){
  modal.classList.toggle('destination-mode',mode==='destination');modal.classList.remove('hidden');modal.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';
  $('modalSetOrigin').classList.toggle('hidden',mode!=='origin');$('refreshStationDemo').classList.toggle('hidden',mode!=='origin');$('modalSetDestination').disabled=mode==='origin';$('modalSetDestination').classList.toggle('btn-inactive',mode==='origin');
  if(mode==='origin'){
-  $('modalEyebrow').textContent='STATION INTELLIGENCE / MRT BLUE LINE';$('modalSourceNote').textContent='⚠ ข้อมูลจำลองสำหรับต้นแบบเท่านั้น ยังไม่ได้เชื่อมต่อข้อมูลเดินรถหรือกล้องแบบเรียลไทม์จริง';$('modalSetOrigin').textContent=`ยืนยัน ${selected.name} เป็นต้นทาง · ไปต่อ →`;$('modalSetDestination').textContent='ปลายทาง · ขั้นตอนถัดไป';
+  $('modalEyebrow').textContent=`STATION INTELLIGENCE / MRT ${selected.line==='purple'?'PURPLE':'BLUE'} LINE`;$('modalSourceNote').textContent='⚠ ข้อมูลจำลองสำหรับต้นแบบเท่านั้น ยังไม่ได้เชื่อมต่อข้อมูลเดินรถหรือกล้องแบบเรียลไทม์จริง';$('modalSetOrigin').textContent=`ยืนยัน ${selected.name} เป็นต้นทาง · ไปต่อ →`;$('modalSetDestination').textContent='ปลายทาง · ขั้นตอนถัดไป';
   $('destinationNote').innerHTML='<strong>สถานีปลายทาง</strong>ข้อมูลเวลารถไฟฟ้าและความหนาแน่นรายตู้จะแสดงที่สถานีต้นทางเป็นหลัก';
   paintStationModal();clearInterval(stationModalTimer);stationModalTimer=setInterval(()=>{if(!activeModalStation||$('stationModal').classList.contains('hidden')||activeModalMode!=='origin'||!stationDemo)return;stationDemo.etaNext--;if(stationDemo.etaNext<=0)stationDemo.etaNext=90+Math.floor(Math.random()*210);if(Date.now()-stationDemo.createdAt>=15000){const fresh=demoSnapshot(activeModalStation);stationDemo={...fresh,etaNext:stationDemo.etaNext};}paintStationModal()},1000);
  }else{
-  $('modalEyebrow').textContent='DESTINATION SELECTION / MRT BLUE LINE';$('modalSourceNote').textContent=`ยืนยัน ${selected.name} เป็นสถานีปลายทาง เพื่อไปยังหน้ากำหนดเวลาเดินทาง`;$('modalSetDestination').textContent=`ยืนยัน ${selected.name} เป็นปลายทาง · ไปต่อ →`;$('destinationNote').innerHTML=`<strong>สถานีปลายทาง: ${selected.name}</strong>ข้อมูลเวลารถไฟฟ้าและความหนาแน่นรายตู้จะแสดงที่สถานีต้นทางเท่านั้น`;clearInterval(stationModalTimer);
+  $('modalEyebrow').textContent=`DESTINATION / MRT ${selected.line==='purple'?'PURPLE':'BLUE'} LINE`;$('modalSourceNote').textContent=`ยืนยัน ${selected.name} เป็นสถานีปลายทาง เพื่อไปยังหน้ากำหนดเวลาเดินทาง`;$('modalSetDestination').textContent=`ยืนยัน ${selected.name} เป็นปลายทาง · ไปต่อ →`;$('destinationNote').innerHTML=`<strong>สถานีปลายทาง: ${selected.name}</strong>ข้อมูลเวลารถไฟฟ้าและความหนาแน่นรายตู้จะแสดงที่สถานีต้นทางเท่านั้น`;clearInterval(stationModalTimer);
  }
  $('closeStationModal').focus();
 }
 function closeStationModal(){ $('stationModal').classList.add('hidden');$('stationModal').classList.remove('destination-mode');$('stationModal').setAttribute('aria-hidden','true');document.body.style.overflow='';activeModalStation=null;pendingStation=null;clearInterval(stationModalTimer);stationModalTimer=null;}
-function applyModalStationRole(step){if(!activeModalStation)return;const s=getStation(activeModalStation);if(!s)return;if(step===1){origin=s;if(destination?.n===s.n)destination=null;originSnapshot=stationDemo?{...stationDemo}:demoSnapshot(s.n);renderAll();closeStationModal();$('stationSearch2').value='';showStep(2);renderAll();notify(`ตั้งต้นทาง: ${s.name} · เลือกปลายทางต่อได้เลย`)}else{if(origin?.n===s.n){notify('สถานีปลายทางต้องต่างจากต้นทาง');return;}destination=s;renderAll();closeStationModal();clearInterval(originSummaryTimer);showStep(3);renderAll();notify(`ตั้งปลายทาง: ${s.name} · กำหนดเวลาที่ต้องการถึง`)}}
+function applyModalStationRole(step){if(!activeModalStation)return;const s=getStation(activeModalStation);if(!s)return;if(step===1){origin=s;if(destination?.n===s.n)destination=null;originSnapshot=stationDemo?{...stationDemo}:demoSnapshot(s.n);renderAll();closeStationModal();$('stationSearch2').value='';mapLineFilter='all';document.querySelectorAll('[data-line-filter]').forEach(b=>b.classList.toggle('active',b.dataset.lineFilter==='all'));showStep(2);renderAll();notify(`ตั้งต้นทาง: ${s.name} · เลือกปลายทางต่อได้เลย`)}else{if(samePhysicalStation(origin,s)){notify('สถานีต้นทางและปลายทางต้องไม่ใช่จุดเดียวกัน');return;}destination=s;renderAll();closeStationModal();clearInterval(originSummaryTimer);showStep(3);renderAll();notify(`ตั้งปลายทาง: ${s.name} · กำหนดเวลาที่ต้องการถึง`)}}
 $('closeStationModal').addEventListener('click',closeStationModal);$('stationModal').addEventListener('click',e=>{if(e.target===$('stationModal'))closeStationModal()});$('modalSetOrigin').addEventListener('click',()=>applyModalStationRole(1));$('modalSetDestination').addEventListener('click',()=>applyModalStationRole(2));$('refreshStationDemo').addEventListener('click',()=>{if(activeModalStation&&activeModalMode==='origin'){stationDemo=demoSnapshot(activeModalStation);paintStationModal();notify('อัปเดตข้อมูลจำลองแล้ว')}});document.addEventListener('keydown',e=>{if(e.key==='Escape'&&activeModalStation)closeStationModal()});
 
 // Events
