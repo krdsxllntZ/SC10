@@ -377,6 +377,18 @@ body[data-theme="light"] .live-pill{background:#f1f9fd;border-color:#d5e9f4;colo
 .side-card .info-row{font-size:10px;padding:6px 0}
 .route-node small{display:none}
 
+
+/* Boarding queue simulation */
+.boarding-queue{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px 16px;margin:12px 0;border:1px solid #cfe2ef;border-radius:14px;background:linear-gradient(120deg,#f0f8fe,#fff)}
+.boarding-queue .queue-copy{min-width:0}.boarding-queue .queue-label{display:flex;align-items:center;gap:7px;color:#58758d;font-size:11px;font-weight:700}.boarding-queue .queue-value{font-size:25px;font-weight:800;color:#155d87;line-height:1.25;margin-top:3px}.boarding-queue .queue-note{font-size:10px;color:#748ba0;margin-top:3px;line-height:1.5}.boarding-queue .queue-trains{display:flex;align-items:center;gap:5px;flex-shrink:0}.boarding-queue .queue-train{width:29px;height:35px;border-radius:8px;border:1px solid #d7e4ed;background:#fff;color:#9aabba;display:grid;place-items:center;font-size:16px}.boarding-queue .queue-train.pass{background:#fff1e9;border-color:#f0c9b5;color:#c46a43}.boarding-queue .queue-train.board{background:#e7f8ef;border-color:#bfe6d0;color:#18835a}
+body[data-theme="dark"] .boarding-queue{background:linear-gradient(120deg,#10283a,#111e2e);border-color:#29465d}
+body[data-theme="dark"] .boarding-queue .queue-label{color:#a3bdd1}
+body[data-theme="dark"] .boarding-queue .queue-value{color:#80dfff}
+body[data-theme="dark"] .boarding-queue .queue-note{color:#91a8bd}
+body[data-theme="dark"] .boarding-queue .queue-train{background:#17283a;border-color:#30465a;color:#839bb0}
+body[data-theme="dark"] .boarding-queue .queue-train.pass{background:#3a281f;border-color:#76513d;color:#ffb184}
+body[data-theme="dark"] .boarding-queue .queue-train.board{background:#12352d;border-color:#286d55;color:#83e6b8}
+
 </style>
 </head>
 <body data-theme="light">
@@ -425,7 +437,7 @@ body[data-theme="light"] .live-pill{background:#f1f9fd;border-color:#d5e9f4;colo
 <div class="section-head"><div><div class="eyebrow">04 · ผลลัพธ์</div><h2>แผนการเดินทาง</h2></div><span class="mini-badge">DEMO</span></div>
 <div class="route-selects"><div class="station-box origin"><div class="cap">⌖ ต้นทาง</div><div class="station-name" id="originTop4">—</div></div><button aria-label="สลับสถานี" class="swap" id="swapBtn4"><svg fill="none" height="18" viewbox="0 0 24 24" width="18"><path d="M7 4v15m0 0-4-4m4 4 4-4M17 20V5m0 0-4 4m4-4 4 4" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7"></path></svg></button><div class="station-box destination"><div class="cap">◎ ปลายทาง</div><div class="station-name" id="destTop4">—</div></div></div>
 <div class="result-hero"><div><div class="caption">แนะนำให้มาถึงสถานีต้นทางเวลา</div><div class="big-time" id="recommendedTime">07:45 น.</div><div class="sub" id="recommendedSub">เพื่อไปถึงปลายทางตามเวลาที่ระบุ</div></div><div class="result-clock">◷</div></div>
-<div class="metrics"><div class="metric"><div class="m-label"><span>◷</span> รอ</div><div class="m-val" id="waitMetric">4 <small style="font-size:12px">นาที</small></div><div class="m-foot">หลังถึงชานชาลา</div></div><div class="metric"><div class="m-label"><span>🚇</span> เดินทาง</div><div class="m-val" id="travelMetric">24 <small style="font-size:12px">นาที</small></div><div class="m-foot">ประมาณการจำลอง</div></div><div class="metric"><div class="m-label"><span>◎</span> สถานี</div><div class="m-val" id="hopsMetric">10 <small style="font-size:12px">สถานี</small></div><div class="m-foot">เส้นทางที่สั้นกว่า</div></div></div>
+<div class="metrics"><div class="metric"><div class="m-label"><span>◷</span> เวลารอขึ้น</div><div class="m-val" id="waitMetric">4 <small style="font-size:12px">นาที</small></div><div class="m-foot" id="waitMetricFoot">รวมเวลารถมาและรอคิว</div></div><div class="metric"><div class="m-label"><span>🚇</span> เดินทาง</div><div class="m-val" id="travelMetric">24 <small style="font-size:12px">นาที</small></div><div class="m-foot">ประมาณการจำลอง</div></div><div class="metric"><div class="m-label"><span>◎</span> สถานี</div><div class="m-val" id="hopsMetric">10 <small style="font-size:12px">สถานี</small></div><div class="m-foot">เส้นทางที่สั้นกว่า</div></div></div>
 <div class="map-toolbar"><span class="map-title">เส้นทางโดยสรุป</span><span class="line-chip" id="routeLineChip">MRT LINE</span></div><div class="route-list" id="routeList"></div>
 <section aria-live="polite" class="platform-guide" id="platformGuide">
 <div class="platform-guide-head"><div><div class="eyebrow">WAYFINDING</div><h3><span class="guide-head-icon">🧭</span> ไปทางไหน?</h3></div><span class="verified-pill" id="guideVerified">คำแนะนำเส้นทาง</span></div>
@@ -437,6 +449,7 @@ body[data-theme="light"] .live-pill{background:#f1f9fd;border-color:#d5e9f4;colo
 <div class="origin-live-tile"><div class="origin-live-label">◷ รถถัดไปถึงใน</div><div class="origin-live-value" id="originSummaryEta">—</div><div class="origin-live-foot" id="originSummaryClock">กำลังคำนวณเวลามาถึง</div><div class="origin-live-foot" id="originSummaryDirection" style="margin-top:5px;color:#9bdfff">—</div></div>
 <div class="origin-live-tile"><div class="origin-live-label">◉ ความหนาแน่นชานชาลา</div><div class="origin-live-crowd"><strong id="originSummaryCrowdPct">—</strong><span id="originSummaryLevel">—</span></div><div class="origin-live-bar"><span id="originSummaryCrowdBar" style="width:0"></span></div><div class="origin-live-foot" id="originSummaryDensity" style="margin-top:7px">— คน/ตร.ม.</div><div class="origin-live-foot" id="originSummaryTrend" style="margin-top:5px">—</div></div>
 </div>
+<div class="boarding-queue" role="status" aria-live="polite"><div class="queue-copy"><div class="queue-label">🚇 รถไฟฟ้าที่ต้องปล่อยผ่านก่อนขึ้น</div><div class="queue-value" id="originQueueValue">ขบวนถัดไป</div><div class="queue-note" id="originQueueNote">คาดการณ์จากความหนาแน่นผู้โดยสาร</div></div><div class="queue-trains" id="originQueueIcons" aria-hidden="true"></div></div>
 <div class="origin-live-trains">
 <div class="origin-mini-train" id="originMiniCarA"><div class="origin-mini-train-head"><span id="originSummaryCarLabelA">ตู้ที่ 2 (นับจากหัวขบวน)</span><strong id="originSummaryLoadA">—</strong></div><div class="origin-mini-train-meta">👥 ความหนาแน่นตู้</div><div class="origin-live-bar"><span id="originSummaryLoadBarA" style="width:0"></span></div></div>
 <div class="origin-mini-train" id="originMiniCarB"><div class="origin-mini-train-head"><span id="originSummaryCarLabelB">ตู้ที่ 3 (นับจากหัวขบวน)</span><strong id="originSummaryLoadB">—</strong></div><div class="origin-mini-train-meta">👥 ความหนาแน่นตู้</div><div class="origin-live-bar"><span id="originSummaryLoadBarB" style="width:0"></span></div></div>
@@ -483,6 +496,7 @@ body[data-theme="light"] .live-pill{background:#f1f9fd;border-color:#d5e9f4;colo
 <div class="trend-chip" id="modalTrend">↘ ผู้โดยสารเริ่มลดลง</div>
 </div>
 </div>
+<div class="boarding-queue" role="status" aria-live="polite"><div class="queue-copy"><div class="queue-label">🚇 รถไฟฟ้าที่ต้องปล่อยผ่านก่อนขึ้น</div><div class="queue-value" id="modalQueueValue">ขบวนถัดไป</div><div class="queue-note" id="modalQueueNote">คาดการณ์จากความหนาแน่นชานชาลาและตู้โดยสาร</div></div><div class="queue-trains" id="modalQueueIcons" aria-hidden="true"></div></div>
 <div class="modal-section-label" style="margin-top:22px"><span>เปรียบเทียบความหนาแน่นรายตู้</span><i class="tiny-line"></i><span style="color:#68839d;letter-spacing:.02em">CARRIAGE CROWDING</span></div>
 <div class="train-list">
 <div class="live-train-card recommended" id="modalCarCard1">
@@ -612,13 +626,13 @@ function calculate(){
  const hops=Math.max(0,route.length-1);
  const walk=Number($('walkTime').value),buffer=Number($('safetyBuffer').value),arrival=clockToMins($('arrivalTime').value);
  originSnapshot=demoSnapshot(origin.n);const live=originSnapshot,preferA=live.loadA<=live.loadB;
- const wait=Math.max(1,Math.ceil(live.etaNext/60));
+ const wait=Math.max(1,Math.ceil(live.etaNext/60))+live.trainsToPass*4;
  const travel=hops*2+Math.max(2,Math.round(hops*.4));const arriveStation=arrival-travel-wait-walk-buffer;
  const preferredLoad=preferA?live.loadA:live.loadB,alternativeLoad=preferA?live.loadB:live.loadA;
  const preferredCar=preferA?live.carA:live.carB,alternativeCar=preferA?live.carB:live.carA;
  $('recommendedTime').textContent=minsToClock(arriveStation)+' น.';
  $('recommendedSub').textContent=`🚇 ตู้ ${preferredCar} · ถึง ${destination.name} ${$('arrivalTime').value} น.`;
- $('waitMetric').innerHTML=`${wait} <small style="font-size:12px">นาที</small>`;$('travelMetric').innerHTML=`${travel} <small style="font-size:12px">นาที</small>`;$('hopsMetric').innerHTML=`${hops} <small style="font-size:12px">สถานี</small>`;
+ $('waitMetric').innerHTML=`${wait} <small style="font-size:12px">นาที</small>`;$('waitMetricFoot').textContent=live.trainsToPass===0?'คาดว่าขึ้นคันถัดไปได้':'รวมเวลาปล่อยผ่าน '+live.trainsToPass+' ขบวน';$('travelMetric').innerHTML=`${travel} <small style="font-size:12px">นาที</small>`;$('hopsMetric').innerHTML=`${hops} <small style="font-size:12px">สถานี</small>`;
  $('carAResult').textContent=`ตู้ ${preferredCar}`;$('carBResult').textContent=`ตู้ ${alternativeCar}`;
  $('carASub').textContent='✦ แนะนำ · นับจากหัวขบวน';$('carBSub').textContent='อีกตัวเลือก · นับจากหัวขบวน';
  $('crowdA').textContent=`${preferredLoad}%`;$('crowdB').textContent=`${alternativeLoad}%`;$('barA').style.width=preferredLoad+'%';$('barB').style.width=alternativeLoad+'%';
@@ -651,6 +665,23 @@ function renderPlatformGuide(route){
 // Station insight popup: simulated live station telemetry. ETA is for the arriving train;
 // load percentages are for individual carriages on that same train.
 let activeModalStation=null, stationDemo=null, stationModalTimer=null;
+function estimateTrainsToPass(platformCrowd,loadA,loadB){
+ const bestLoad=Math.min(loadA,loadB);
+ // Demo heuristic: higher platform demand and fuller cars mean more trains may pass before boarding.
+ if(platformCrowd<38 && bestLoad<55)return 0;
+ if(platformCrowd<53 && bestLoad<68)return 1;
+ if(platformCrowd<68)return 2;
+ if(platformCrowd<82)return 3;
+ return 4;
+}
+function queueLabel(count){return count===0?'ขึ้นรถไฟฟ้าคันถัดไป':`ปล่อยผ่าน ${count} ขบวน`; }
+function queueIconsHtml(count){let html='';for(let i=0;i<count;i++)html+='<span class="queue-train pass">🚇</span>';html+='<span class="queue-train board">⬆</span>';return html;}
+function paintQueue(prefix,d){
+ const value=$(prefix+'QueueValue'),note=$(prefix+'QueueNote'),icons=$(prefix+'QueueIcons');if(!value||!note||!icons)return;
+ value.textContent=queueLabel(d.trainsToPass);
+ note.textContent=d.trainsToPass===0?'คาดว่าขึ้นรถไฟฟ้าคันถัดไปได้เลย':`คาดว่าขึ้นได้ในคันที่ ${d.trainsToPass+1} · เว้นช่วงรถจำลอง 4 นาที/ขบวน`;
+ icons.innerHTML=queueIconsHtml(d.trainsToPass);
+}
 function demoSnapshot(n){
  const tick=Math.floor(Date.now()/15000);const seed=(n*31+tick*17)%997;
  const crowd=25+(seed*13)%65;const density=(0.35+crowd/100*2.05).toFixed(1);
@@ -659,7 +690,8 @@ function demoSnapshot(n){
  const carA=2,carB=3;
  const level=crowd<45?'ต่ำ':crowd<70?'ปานกลาง':'หนาแน่น';
  const trend=(seed%3===0)?'↗ ผู้โดยสารเริ่มเพิ่มขึ้น':(seed%3===1)?'↘ ผู้โดยสารเริ่มลดลง':'→ ปริมาณผู้โดยสารทรงตัว';
- return {n,createdAt:Date.now(),etaNext,carA,carB,crowd,density,loadA,loadB,level,trend,seed};
+ const trainsToPass=estimateTrainsToPass(crowd,loadA,loadB);
+ return {n,createdAt:Date.now(),etaNext,carA,carB,crowd,density,loadA,loadB,level,trend,seed,trainsToPass};
 }
 function formatEta(seconds){seconds=Math.max(0,Math.floor(seconds));return `${String(Math.floor(seconds/60)).padStart(2,'0')}:${String(seconds%60).padStart(2,'0')}`}
 function predictedClock(seconds){const d=new Date(Date.now()+Math.max(0,seconds)*1000);return `${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`}
@@ -669,7 +701,7 @@ function paintStationModal(){if(!activeModalStation||!stationDemo)return;const s
  $('modalNextEta1').innerHTML=`${formatEta(d.etaNext)} <small>นาที:วินาที</small>`;$('modalNextTime1').textContent=`ถึงประมาณ ${predictedClock(d.etaNext)} น.`;
  const direction='ดูทิศทางตามปลายทาง';
  $('modalDirection1').textContent=`↗ ${direction}`;
- $('modalCrowdPct').textContent=`${d.crowd}%`;$('modalCrowdBar').style.width=`${d.crowd}%`;$('modalDensity').textContent=`${d.density} คน/ตร.ม.`;$('modalCrowdLevel').textContent=d.level;$('modalCrowdLevel').className='crowd-level-pill'+(d.level==='ปานกลาง'?' medium':d.level==='หนาแน่น'?' high':'');$('modalTrend').textContent=d.trend;
+ $('modalCrowdPct').textContent=`${d.crowd}%`;$('modalCrowdBar').style.width=`${d.crowd}%`;$('modalDensity').textContent=`${d.density} คน/ตร.ม.`;$('modalCrowdLevel').textContent=d.level;$('modalCrowdLevel').className='crowd-level-pill'+(d.level==='ปานกลาง'?' medium':d.level==='หนาแน่น'?' high':'');$('modalTrend').textContent=d.trend;paintQueue('modal',d);
  $('modalCarLabelA').textContent=`ตู้ที่ ${d.carA} (นับจากหัวขบวน)`;$('modalCarLabelB').textContent=`ตู้ที่ ${d.carB} (นับจากหัวขบวน)`;
  $('modalCarPositionA').textContent='รถคันถัดไป · นับจากหัวขบวน';$('modalCarPositionB').textContent='รถคันถัดไป · นับจากหัวขบวน';
  const aRecommended=d.loadA<=d.loadB;$('modalCarStatusA').textContent=aRecommended?'แนะนำ':'อีกตัวเลือก';$('modalCarStatusB').textContent=!aRecommended?'แนะนำ':'อีกตัวเลือก';$('modalCarLoadA').textContent=`${d.loadA}%`;$('modalCarLoadB').textContent=`${d.loadB}%`;$('modalCarBarA').style.width=`${d.loadA}%`;$('modalCarBarB').style.width=`${d.loadB}%`;
@@ -682,7 +714,7 @@ let activeModalMode='origin';let originSnapshot=null;let originSummaryTimer=null
 function paintOriginSummary(){if(!origin||!originSnapshot)return;const s=origin,d=originSnapshot;const aRecommended=d.loadA<=d.loadB;
  $('originLiveName').textContent=`${s.name} · สถานีต้นทาง`;$('originLiveSub').textContent=`${s.code} · ${s.en} · อัปเดตตัวอย่าง ${new Date(d.createdAt).toLocaleTimeString('th-TH',{hour:'2-digit',minute:'2-digit',second:'2-digit'})}`;
  $('originSummaryEta').textContent=formatEta(d.etaNext);$('originSummaryClock').textContent=`ถึงประมาณ ${predictedClock(d.etaNext)} น.`;$('originSummaryDirection').textContent='↗ ดูป้ายปลายทาง';
- $('originSummaryCrowdPct').textContent=`${d.crowd}%`;$('originSummaryCrowdBar').style.width=`${d.crowd}%`;$('originSummaryLevel').textContent=d.level;$('originSummaryDensity').textContent=`${d.density} คน/ตร.ม.`;$('originSummaryTrend').textContent=d.trend;
+ $('originSummaryCrowdPct').textContent=`${d.crowd}%`;$('originSummaryCrowdBar').style.width=`${d.crowd}%`;$('originSummaryLevel').textContent=d.level;$('originSummaryDensity').textContent=`${d.density} คน/ตร.ม.`;$('originSummaryTrend').textContent=d.trend;paintQueue('origin',d);
  $('originSummaryCarLabelA').textContent=`ตู้ที่ ${d.carA} (นับจากหัวขบวน)`;$('originSummaryCarLabelB').textContent=`ตู้ที่ ${d.carB} (นับจากหัวขบวน)`;
  $('originSummaryLoadA').textContent=`${d.loadA}%`;$('originSummaryLoadB').textContent=`${d.loadB}%`;$('originSummaryLoadBarA').style.width=`${d.loadA}%`;$('originSummaryLoadBarB').style.width=`${d.loadB}%`;
  $('originMiniCarA').classList.toggle('recommended',aRecommended);$('originMiniCarB').classList.toggle('recommended',!aRecommended);$('originSummaryPick').textContent=`✦ ตู้แนะนำ ${aRecommended?d.carA:d.carB} · ${Math.min(d.loadA,d.loadB)}% (นับจากหัวขบวน)`;
